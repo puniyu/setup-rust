@@ -37,9 +37,19 @@ runs:
     - name: Install Rust Toolchain
       uses: dtolnay/rust-toolchain@1.91.0
 
+    - name: Check File
+      id: check_file
+      shell: bash
+      run: |
+        if [ -f "rust-toolchain.toml" ]; then
+          echo "exists=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "exists=false" >> "$GITHUB_OUTPUT"
+        fi
+
     - name: Change to minimal profile
       uses: colt-1/toml-editor@1.1.1
-      if: ${{ hashFiles('rust-toolchain.toml') != '' }}
+      if: steps.check_file.outputs.exists == 'true'
       with:
         file: rust-toolchain.toml
         key: toolchain.profile
@@ -47,7 +57,7 @@ runs:
 
     - name: Set Minimal Profile
       shell: bash
-      if: ${{ hashFiles('rust-toolchain.toml') != '' }}
+      if: steps.check_file.outputs.exists == 'true'
       run: rustup set profile minimal
 
     - name: Add Target
