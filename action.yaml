@@ -34,31 +34,24 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Install Rust Toolchain
-      uses: dtolnay/rust-toolchain@1.91.0
-
     - name: Check File
       id: check_file
-      shell: bash
-      run: |
-        if [ -f "rust-toolchain.toml" ]; then
-          echo "exists=true" >> "$GITHUB_OUTPUT"
-        else
-          echo "exists=false" >> "$GITHUB_OUTPUT"
-        fi
-
-    - name: Change to minimal profile
-      uses: colt-1/toml-editor@1.1.1
-      if: steps.check_file.outputs.exists == 'true'
+      uses: andstor/file-existence-action@v3
       with:
-        file: rust-toolchain.toml
-        key: toolchain.profile
-        value: minimal
+        files: "rust-toolchain.toml"
 
-    - name: Set Minimal Profile
-      shell: bash
-      if: steps.check_file.outputs.exists == 'true'
-      run: rustup set profile minimal
+    - name: Get Version from Toolchain File
+      id: get_version
+      uses: SebRollen/toml-action@v1.2.0
+      if: steps.check_file.outputs.files_exists == 'true'
+      with:
+        file: 'rust-toolchain.toml'
+        field: 'toolchain.channel'
+
+    - name: Install Rust Toolchain
+      uses: dtolnay/rust-toolchain@master
+      with:
+        toolchain: ${{ inputs.toolchain || (steps.get_version.outputs.value || 'stable') }}
 
     - name: Add Target
       shell: bash
