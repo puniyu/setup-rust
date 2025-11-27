@@ -36,13 +36,13 @@ runs:
   steps:
     - name: Check File
       id: check_file
-      uses: andstor/file-existence-action@v3
+      uses: andstor/file-existence-action@076e0072799f4942c8bc574a82233e1e4d13e9d6 # v3
       with:
         files: "rust-toolchain.toml"
 
     - name: Get Version from Toolchain File
       id: get_version
-      uses: SebRollen/toml-action@v1.2.0
+      uses: SebRollen/toml-action@b1b3628f55fc3a28208d4203ada8b737e9687876 # v1.2.0
       if: steps.check_file.outputs.files_exists == 'true'
       with:
         file: 'rust-toolchain.toml'
@@ -64,7 +64,7 @@ runs:
       run: rustup component add ${{ inputs.components }}
 
     - name: Install Tools
-      uses: taiki-e/install-action@v2
+      uses: taiki-e/install-action@1ee706eb04986370fc60419ba172594c51067f29 # v2
       if: ${{ inputs.tools }}
       with:
         tool: ${{ inputs.tools }}
