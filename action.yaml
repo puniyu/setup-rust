@@ -64,7 +64,7 @@ runs:
       run: rustup component add ${{ inputs.components }}
 
     - name: Install Tools
-      uses: taiki-e/install-action@3575e532701a5fc614b0c842e4119af4cc5fd16d # v2
+      uses: taiki-e/install-action@d850aa816998e5cf15f67a78c7b933f2a5033f8a # v2
       if: ${{ inputs.tools }}
       with:
         tool: ${{ inputs.tools }}
