@@ -1,6 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["helpers:pinGitHubActionDigestsToSemver"],
-  "minimumReleaseAge": "3 days",
+  "schedule": [
+    "at any time"
+  ],
+  "rangeStrategy": "auto",
+  "automerge": true,
+  "automergeType": "pr",
   "internalChecksAsSuccess": true
 }
