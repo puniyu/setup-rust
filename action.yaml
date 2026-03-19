@@ -1,9 +1,7 @@
 name: 'setup-rust'
 author: 'puniyu'
 description: '设置Rust作'
-branding:
-  icon: activity
-  color: purple
+
 
 inputs:
   toolchain:
