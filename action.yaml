@@ -47,7 +47,7 @@ runs:
         field: 'toolchain.channel'
 
     - name: Install Rust Toolchain
-      uses: dtolnay/rust-toolchain@master
+      uses: dtolnay/rust-toolchain@3c5f7ea28cd621ae0bf5283f0e981fb97b8a7af9 # master
       with:
         toolchain: ${{ inputs.toolchain || (steps.get_version.outputs.value || 'stable') }}
 
